@@ -2,7 +2,7 @@
 Simple JavaFX and Oracle Object Relational Database CRUD and queries
 
 # Features:
-- Responsive UI.
+- Responsive UI
 
 # TODO:
 - The application connects directly to the database which is a bad practice. It should either be Client/Server or using Web API.
