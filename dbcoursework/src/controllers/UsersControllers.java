@@ -50,7 +50,7 @@ public class UsersControllers implements Initializable {
         // Table
         tableView.setEditable(true);
 
-        TableColumn<User, Integer> colId = new TableColumn<>("ID".toUpperCase());
+        TableColumn<User, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         TableColumn<User, String> colEmail = new TableColumn<>("E-mail".toUpperCase());

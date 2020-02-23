@@ -62,7 +62,7 @@ public class ProjectsController implements Initializable {
         // Table
         tableView.setEditable(true);
 
-        TableColumn<Project, Integer> colId = new TableColumn<>("ID".toUpperCase());
+        TableColumn<Project, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         TableColumn<Project, String> colName = new TableColumn<>("Име на проект".toUpperCase());

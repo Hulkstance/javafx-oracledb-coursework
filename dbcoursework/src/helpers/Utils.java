@@ -85,7 +85,7 @@ public class Utils {
     /**
      * Gets service options from the database.
      *
-     * @return the service options/
+     * @return the service options.
      */
     public ObservableList<String> getServiceOptions() {
         ResultSet resultSet = Utils.getInstance().executeQuery("SELECT name FROM service");
