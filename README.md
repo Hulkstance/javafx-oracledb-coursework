@@ -1,8 +1,11 @@
 # JavaFX - OracleDB Coursework
 Simple JavaFX and Oracle Object Relational Database CRUD and queries
 
+# Features:
+- Responsive UI
+
 # TODO:
-- The application connects to the database directly which is really a bad practice. It should either be Client/Server or using Web API.
+- The application connects directly to the database which is a bad practice. It should either be Client/Server or using Web API.
 
 # Screenshots:
 ![Main UI](/screenshots/main-ui.png?raw=true "Main UI")
