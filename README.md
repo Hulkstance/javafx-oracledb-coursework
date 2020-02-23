@@ -1,5 +1,5 @@
 # JavaFX - OracleDB Coursework
-Simple JavaFX and Oracle Object Relational Database CRUD and queries
+Simple JavaFX application using Oracle Object-Relational Database which has CRUD capabilities and a few queries.
 
 # Features:
 - Responsive UI
