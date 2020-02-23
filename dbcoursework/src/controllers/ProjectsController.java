@@ -154,38 +154,38 @@ public class ProjectsController implements Initializable {
     }
 
     /**
-     * Adds a new project.
+     * Adds a new record into the database.
      *
      * @param actionEvent
      */
     public void addRecord(ActionEvent actionEvent) throws SQLException {
-
+        // Validate empty fields
         if (idField.getText().isEmpty() || nameField.getText().isEmpty() || descriptionField.getText().isEmpty() ||
                 customerCombo.getSelectionModel().isEmpty() || serviceCombo.getSelectionModel().isEmpty()) {
             Utils.getInstance().showMessage(Alert.AlertType.ERROR, "Грешка", "Моля, попълнете всички полета.");
             return;
         }
 
+        // Validate customer
         Pattern pattern = Pattern.compile("^[\\w ]*\\(ID: (?<customerId>[0-9]*)\\)$");
         Matcher matcher = pattern.matcher(customerCombo.getSelectionModel().getSelectedItem());
+        if (!matcher.matches())
+            return;
 
-        if (matcher.matches()) {
-            // Add into the database
-            String query = String.format("INSERT INTO project VALUES (%d, '%s', '%s', " +
-                            "(SELECT TREAT(REF(u) AS REF customer_t) FROM \"USER\" u WHERE idno = %d AND VALUE(u) IS OF TYPE (customer_t)), " +
-                            "(SELECT REF(s) FROM service s WHERE name = '%s'))",
-                    Integer.parseInt(idField.getText()),
-                    nameField.getText(), descriptionField.getText(), Integer.parseInt(matcher.group("customerId")),
-                    serviceCombo.getSelectionModel().getSelectedItem());
+        // Add record into the database
+        String query = String.format("INSERT INTO project VALUES (%d, '%s', '%s', " +
+                        "(SELECT TREAT(REF(u) AS REF customer_t) FROM \"USER\" u WHERE idno = %d AND VALUE(u) IS OF TYPE (customer_t)), " +
+                        "(SELECT REF(s) FROM service s WHERE name = '%s'))",
+                Integer.parseInt(idField.getText()),
+                nameField.getText(), descriptionField.getText(), Integer.parseInt(matcher.group("customerId")),
+                serviceCombo.getSelectionModel().getSelectedItem());
+        Utils.getInstance().executeQuery(query);
 
-            Utils.getInstance().executeQuery(query);
+        // Show message
+        Utils.getInstance().showMessage(Alert.AlertType.INFORMATION, "Информация", "Заявката беше изпълнена.");
 
-            // Show message
-            Utils.getInstance().showMessage(Alert.AlertType.INFORMATION, "Информация", "Заявката беше изпълнена.");
-
-            // Reload data
-            clear();
-            loadData();
-        }
+        // Reload data
+        clear();
+        loadData();
     }
 }

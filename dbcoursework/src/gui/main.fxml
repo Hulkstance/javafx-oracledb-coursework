@@ -13,6 +13,8 @@
 
         <Button onAction="#showProjects" prefHeight="25.0" prefWidth="112.0" text="Всички проекти"/>
 
+        <Button onAction="#showUsers" prefHeight="25.0" prefWidth="112.0" text="Потребители"/>
+
         <Button onAction="#queryOne" prefHeight="25.0" prefWidth="112.0" text="Справка 1"/>
 
         <Button onAction="#queryTwo" prefHeight="25.0" prefWidth="112.0" text="Справка 2"/>

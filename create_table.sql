@@ -142,18 +142,6 @@ CREATE TYPE staff_project_t AS OBJECT (
 
 CREATE TABLE staff_project OF staff_project_t;
 
-INSERT INTO staff_project VALUES
-((SELECT TREAT(REF(u) AS REF staff_t) FROM "USER" u WHERE idno = 3 AND VALUE(u) IS OF TYPE (staff_t)), (SELECT REF(p) FROM project p WHERE projectno = 1));
-
-INSERT INTO staff_project VALUES
-((SELECT TREAT(REF(u) AS REF staff_t) FROM "USER" u WHERE idno = 3 AND VALUE(u) IS OF TYPE (staff_t)), (SELECT REF(p) FROM project p WHERE projectno = 2));
-
-INSERT INTO staff_project VALUES
-((SELECT TREAT(REF(u) AS REF staff_t) FROM "USER" u WHERE idno = 4 AND VALUE(u) IS OF TYPE (staff_t)), (SELECT REF(p) FROM project p WHERE projectno = 3));
-
-INSERT INTO staff_project VALUES
-((SELECT TREAT(REF(u) AS REF staff_t) FROM "USER" u WHERE idno = 4 AND VALUE(u) IS OF TYPE (staff_t)), (SELECT REF(p) FROM project p WHERE projectno = 4));
-
 CREATE TYPE industry_t AS OBJECT (
   industryno   NUMBER,
   name         VARCHAR2(40)
@@ -232,20 +220,3 @@ INSERT INTO project_tag VALUES
 
 INSERT INTO project_tag VALUES
 ((SELECT REF(p) FROM project p WHERE projectno = 2), (SELECT REF(t) FROM tag t WHERE tagno = 1));
-
--- Имената на клиентите с повече от 3 проекта, както и броя на проектите
-SELECT (TREAT(REF(u) AS REF customer_t).name.first_name ||  ' ' || (TREAT(REF(u) AS REF customer_t).name.last_name)) AS name, COUNT(p.projectno) 
-FROM "USER" u JOIN project p ON u.idno = p.customer.idno 
-WHERE VALUE(u) IS OF TYPE (customer_t) 
-GROUP BY (TREAT(REF(u) AS REF customer_t).name.first_name ||  ' ' || (TREAT(REF(u) AS REF customer_t).name.last_name)) 
-HAVING COUNT(p.projectno) >= 3;
-
--- Имената и e-mail адресите на администраторите
-SELECT (TREAT(REF(u) AS REF staff_t).name.first_name ||  ' ' || (TREAT(REF(u) AS REF staff_t).name.last_name)) AS name, 
-TREAT(REF(u) AS REF staff_t).email 
-FROM "USER" u JOIN "RANK" r ON TREAT(REF(u) AS REF staff_t).rank.rankno = r.rankno
-WHERE VALUE(u) IS OF TYPE (staff_t) AND r.name = 'Administrator';
-
--- Имената на проектите с тагове "брандинг"
-SELECT p.name, pt.tag.name FROM project p JOIN project_tag pt ON p.projectno = pt.project.projectno
-WHERE pt.tag.name = 'брандинг';

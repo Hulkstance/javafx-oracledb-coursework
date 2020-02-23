@@ -88,7 +88,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * This method shows all projects in a new window.
+     * This method shows all projects in another window.
      *
      * @param actionEvent
      * @throws IOException
@@ -108,6 +108,31 @@ public class MainController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Проекти");
+        stage.setScene(new Scene(tableParent, 800, 400));
+        stage.show();
+    }
+
+    /**
+     * This method shows all users in another window.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
+    public void showUsers(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/users.fxml"));
+        Parent tableParent = fxmlLoader.load();
+
+        UsersControllers usersControllers = fxmlLoader.getController();
+
+        try {
+            usersControllers.loadData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Потребители");
         stage.setScene(new Scene(tableParent, 800, 400));
         stage.show();
     }
